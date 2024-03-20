@@ -1,0 +1,57 @@
+{% extends './layout.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarCursoModal">
+                Agregar curso
+            </button>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <h1>Tabla de Cursos</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-active">
+                        <th scope="row">Código Curso</th>
+                        <th>Nombre Curso</th>
+                        <th>No. de horas</th>
+                        <th>Área de formación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for curso in cursos %}
+                        {% set c = curso %}
+                        {% include 'edit_curso.html' %}
+                        {% include 'delete_curso.html' %}
+                        <tr>
+                            <td>{{ curso.0 }}</td>
+                            <td>{{ curso.1 }}</td>
+                            <td>{{ curso.2 }}</td>
+                            <td>{{ curso.3 }}</td>
+                            <td>
+                            <button type="button" class="btn btn-primary btn-sm me-3" data-bs-toggle="modal" data-bs-target="#editarCursoModal{{ c.0 }}">
+                                Editar curso
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm me-3" data-bs-toggle="modal" data-bs-target="#eliminarCursoModal{{ c.0 }}">
+                                Eliminar
+                            </button>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include 'add_cursos.html' %}
+
+{% endblock %}

@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '123456'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'senabd'
 
 app.secret_key = 'mysecretkey'
@@ -57,7 +57,7 @@ def add_cursos():
         except Exception as e:
             flash(str(e), 'error')
 
-        return redirect(url_for('index'))
+        return redirect(url_for('task'))
     else:
         return render_template('index.html')
 
@@ -66,7 +66,7 @@ def get_curso(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM curso WHERE id = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_curso.html', c=data[0])
+    return render_template('task', c=data[0])
 
 @app.route('/update/<id>', methods=['POST'])
 def update_curso(id):

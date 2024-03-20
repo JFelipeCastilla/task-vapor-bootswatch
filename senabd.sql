@@ -24,6 +24,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO usuario (nombre_usuario, password) VALUES ('usuario1', 'contraseña123');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `alumno`
 --
 

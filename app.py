@@ -13,6 +13,26 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        nombre_usuario = request.form['nombre_usuario']
+        password = request.form['password']
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM usuario WHERE nombre_usuario = %s AND password = %s', (nombre_usuario, password))
+        usuario = cur.fetchone()
+        cur.close()
+        if usuario:
+            flash('Inicio de sesión exitoso', 'success')
+            return redirect(url_for('task'))
+        else:
+            flash('Credenciales inválidas. Por favor, inténtalo de nuevo.', 'danger')
+            return redirect(url_for('index'))
+
+@app.route('/task')
+def task():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM curso')
     data = cur.fetchall()
@@ -27,7 +47,6 @@ def add_cursos():
             horas = request.form['horas']
             area = request.form['area']
 
-            # Verificar si algún campo está vacío
             if not codigo or not nombre or not horas or not area:
                 raise ValueError("Todos los campos son obligatorios. Por favor, rellene todos los campos.")
 

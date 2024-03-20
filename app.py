@@ -78,17 +78,17 @@ def update_curso(id):
         cur = mysql.connection.cursor()
         cur.execute('UPDATE curso SET codigo = %s, nombre = %s, horas = %s, area = %s WHERE id = %s', (codigo, nombre, horas, area, id))
         mysql.connection.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('task'))
 
 @app.route('/delete/<id>')
 def delete(id):
     cur = mysql.connection.cursor()
     cur.execute('DELETE FROM curso WHERE ID = %s', (id,))
     mysql.connection.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('task'))
 
 def pagina_no_encontrada(error):
-    return redirect(url_for('index'))
+    return redirect(url_for('task'))
 
 if __name__ == '__main__':
     app.register_error_handler(404, pagina_no_encontrada)
